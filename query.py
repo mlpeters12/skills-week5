@@ -55,13 +55,23 @@ def get_model_info(year):
     '''Takes in a year, and prints out each model, brand_name, and brand
     headquarters for that year using only ONE database query.'''
 
-    pass
+    model_brand = db.session.query(Model,Brand).join(Brand).filter(Model.year == year).all()
+
+    for model, brand in model_brand:
+        print model.name + " " + model.brand + " " + brand.headquarters
+
+get_model_info(1950)
 
 def get_brands_summary():
     '''Prints out each brand name, and each model name for that brand
      using only ONE database query.'''
 
-    pass
+    brand_names = db.session.query(Brand,Model).join(Model).all()
+
+    for brand, model in brand_names:
+        print brand.name + " " + model.name
+
+get_brands_summary()
 
 # -------------------------------------------------------------------
 
@@ -79,7 +89,10 @@ def get_models_between(start_year, end_year):
 # Part 3: Discussion Questions (Include your answers as comments.)
 
 # 1. What is the returned value and datatype of ``Brand.query.filter_by(name='Ford')``?
+# this returns on list of objects, objects for the records with the brand name Ford
 
 
 # 2. In your own words, what is an association table, and what *type* of relationship
 # does an association table manage?
+# an association table is a "middle man" table that just only needs data to connect two tables together.
+# ie: has a primary key and two foreign keys for other tables
