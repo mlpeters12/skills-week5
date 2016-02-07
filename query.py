@@ -22,20 +22,31 @@ init_app()
 # Part 2: Write queries
 
 # Get the brand with the **id** of 8.
+q1 = db.session.query(Brand).get(8)
 
 # Get all models with the **name** Corvette and the **brand_name** Chevrolet.
+q2 = db.session.query(Model).filter_by(name='Corvette',brand_name='Chevrolet').all()
 
 # Get all models that are older than 1960.
+q3 = db.session.query(Model).filter(Model.year >1960).all()
 
 # Get all brands that were founded after 1920.
+q4 = db.session.query(Brand).filter(Brand.founded > 1920).all()
 
 # Get all models with names that begin with "Cor".
+q5 = db.session.query(Model).filter(Model.name.like("%Cor%")).all()
 
 # Get all brands with that were founded in 1903 and that are not yet discontinued.
+q6 = db.session.query(Brand).filter(Brand.founded == 1903 , Brand.discontinued == None).all()
 
 # Get all brands with that are either discontinued or founded before 1950.
+q7 = db.session.query(Brand).filter((Brand.founded < 1950)|(Brand.discontinued.isnot(None)).all()
+# **query seemed to work but when I tried to call the object, i got this error:
+# **"UnicodeEncodeError: 'ascii' codec can't encode character u'\xeb' in position 28: ordinal not in range(128)"
+
 
 # Get any model whose brand_name is not Chevrolet.
+q8 = db.session.query(Model).filter(Model.brand_name != 'Chevrolet').all()
 
 # Fill in the following functions. (See directions for more info.)
 
@@ -67,6 +78,7 @@ def get_models_between(start_year, end_year):
 # Part 3: Discussion Questions (Include your answers as comments.)
 
 # 1. What is the returned value and datatype of ``Brand.query.filter_by(name='Ford')``?
+
 
 # 2. In your own words, what is an association table, and what *type* of relationship
 # does an association table manage?

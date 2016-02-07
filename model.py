@@ -13,6 +13,7 @@ db = SQLAlchemy()
 # Part 1: Compose ORM
 
 class Model(db.Model):
+    """Model information"""
 
     __tablename__ = "models"
     
@@ -23,21 +24,35 @@ class Model(db.Model):
     brand_name = db.Column(db.String(50), nullable=True)
     name = db.Column(db.String(50), nullable=False)
 
+    brands = db.relationship('Brand')
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Model model_id=%s name=%s brand=%s> year =%s" % (self.id, self.name, self.brand_name, self.year)
+
 
 class Brand(db.Model):
+    """Car Brand information"""
 
     __tablename__ = "brands"
     
     id = db.Column(db.Integer,
                 primary_key=True,
                 autoincrement=True)
-    name = db.Column(db.String(50),db.ForeignKey('models.brand_name'), nullable=False)
+    name = db.Column(db.String(50),
+                    db.ForeignKey('models.brand_name'), 
+                    nullable=False)
     founded = db.Column(db.Integer, nullable=True)
     headquarters = db.Column(db.String(50), nullable=True)
     discontinued = db.Column(db.Integer, nullable=True)
 
-    name = db.relationship('Model', 
-                            backref=db.backref('brand', order_by=id))
+    models = db.relationship('Model')
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Brand brand_id=%s name=%s>" % (self.id, self.name)
 
 # End Part 1
 ##############################################################################
