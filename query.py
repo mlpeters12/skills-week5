@@ -43,6 +43,7 @@ q6 = db.session.query(Brand).filter(Brand.founded == 1903 , Brand.discontinued =
 q7 = db.session.query(Brand).filter((Brand.founded < 1950)|(Brand.discontinued.isnot(None)).all()
 # **query seemed to work but when I tried to call the object, i got this error:
 # **"UnicodeEncodeError: 'ascii' codec can't encode character u'\xeb' in position 28: ordinal not in range(128)"
+# i think it has to do with the citroen word in Model table....
 
 
 # Get any model whose brand_name is not Chevrolet.
